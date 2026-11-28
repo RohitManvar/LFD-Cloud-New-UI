@@ -7,7 +7,9 @@ import {
   ShieldAlert, CalendarRange, Leaf, BookOpen, GitBranch, ClipboardList,
   Sparkles, ArrowRight, Check, X, CircleHelp, Package, BarChart3, Grid3X3,
   Layers, FileText, Boxes, CheckCircle2, Target, PanelLeft,
-  QrCode, Clock, Smile, CircleAlert, Copy, Minus, Award, MapPin, CalendarDays, UserCheck, Presentation,
+  QrCode, Clock, Smile, CircleAlert, Copy, Minus, Award, MapPin, CalendarDays, UserCheck, Presentation, ChevronUp, ChevronDown, ChevronLeft, Undo2, Redo2, ZoomIn, ZoomOut, Maximize2, Minimize2, Move, Rows3, RotateCcw, Save, Tag, Scan,
+  Lock, Mail, Phone, Shield, Laptop, Smartphone, KeyRound, Camera, RefreshCw, Key,
+  LogOut, User, CircleUser, Settings, HelpCircle, CheckCheck, Archive, BellOff,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 const icons: Record<string, LucideIcon> = {
@@ -19,7 +21,9 @@ const icons: Record<string, LucideIcon> = {
   ShieldAlert, CalendarRange, Leaf, BookOpen, GitBranch, ClipboardList,
   Sparkles, ArrowRight, Check, X, CircleHelp, Package, BarChart3, Grid3X3,
   Layers, FileText, Boxes, CheckCircle2, Target, PanelLeft,
-  QrCode, Clock, Smile, CircleAlert, Copy, Minus, Award, MapPin, CalendarDays, UserCheck, Presentation,
+  QrCode, Clock, Smile, CircleAlert, Copy, Minus, Award, MapPin, CalendarDays, UserCheck, Presentation, ChevronUp, ChevronDown, ChevronLeft, Undo2, Redo2, ZoomIn, ZoomOut, Maximize2, Minimize2, Move, Rows3, RotateCcw, Save, Tag, Scan,
+  Lock, Mail, Phone, Shield, Laptop, Smartphone, KeyRound, Camera, RefreshCw, Key,
+  LogOut, User, CircleUser, Settings, HelpCircle, CheckCheck, Archive, BellOff,
 };
 export default function Icon({ name, size = 18, className = '' }: { name: string; size?: number; className?: string }) {
   const Glyph = icons[name] || CircleHelp;

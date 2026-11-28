@@ -3,7 +3,81 @@
  * Dates/counts intentionally match the provided October 2026 design references.
  * Dashboard platform totals and Users page sample totals have different scopes.
  */
-export const profile = { full_name: 'Rohit Manvar', initials: 'RM', global_role: 'super_admin', role_label: 'Super Admin' };
+export const profile = {
+  user_id: 'user-rohit',
+  full_name: 'Rohit Manvar',
+  first_name: 'Rohit',
+  last_name: 'Manvar',
+  initials: 'RM',
+  email: 'superadmin@vsmstudio.com',
+  vsm_email: 'superadmin@vsmstudio.com',
+  phone: '+91 98765 43210',
+  global_role: 'super_admin',
+  role_label: 'Super Admin',
+  position: 'Head of Lean Practice & Solutions Architect',
+  department: 'Operational Excellence & Consulting',
+  organization: 'Faber Infinite Consulting',
+  location: 'Pune / Ahmedabad, India',
+  timezone: 'Asia/Kolkata (IST, UTC+5:30)',
+  bio: 'Leading Lean Flow Design (LFD) deployment, Value Stream Mapping transformations, and digital operational excellence workflows across enterprise manufacturing facilities.',
+  member_since: '2026-08-15',
+  last_active: 'Active now',
+  two_factor_enabled: true,
+  two_factor_method: 'Authenticator App (TOTP)',
+  backup_codes_left: 8,
+  theme_preference: 'system',
+  density: 'comfortable',
+  default_landing: '/home',
+  date_format: 'DD/MM/YYYY',
+  number_system: 'indian',
+  notify_email: true,
+  notify_risk_alerts: true,
+  notify_study_export: true,
+  notify_weekly_digest: false,
+};
+
+export const profilePermissions = [
+  { id: 'perm-tenant', label: 'Multi-Tenant Management', desc: 'Create, suspend, and configure client organizations and limits', granted: true, category: 'Administration' },
+  { id: 'perm-users', label: 'User & Role Provisioning', desc: 'Manage user credentials, invite members, and assign role boundaries', granted: true, category: 'Administration' },
+  { id: 'perm-vsm', label: 'VSM & Flow Architect', desc: 'Full write access across all 15 LFD service modules & custom formulas', granted: true, category: 'Engineering' },
+  { id: 'perm-export', label: 'Global Data & Excel Export', desc: 'Export raw studies, PPQ matrices, and executive audit reports', granted: true, category: 'Data & Security' },
+  { id: 'perm-audit', label: 'System Audit Logs', desc: 'Inspect platform mutation logs, logins, and permission alterations', granted: true, category: 'Data & Security' },
+  { id: 'perm-billing', label: 'Billing & Plan Limits', desc: 'Update enterprise subscription tiers and platform usage quotas', granted: true, category: 'Billing' },
+];
+
+export const profileSessions = [
+  {
+    id: 'sess-current',
+    device: 'Desktop Workstation',
+    os: 'Windows 11 · Chrome 130.0',
+    location: 'Pune, Maharashtra, India',
+    ip: '103.21.144.62',
+    current: true,
+    last_active: 'Active now',
+    icon: 'Laptop',
+  },
+  {
+    id: 'sess-macbook',
+    device: 'MacBook Pro 16"',
+    os: 'macOS Sonoma · Safari 17.5',
+    location: 'Ahmedabad, Gujarat, India',
+    ip: '115.240.89.14',
+    current: false,
+    last_active: '2 days ago (25 Oct 2026, 14:22)',
+    icon: 'Laptop',
+  },
+  {
+    id: 'sess-mobile',
+    device: 'iPhone 15 Pro',
+    os: 'iOS 18.1 · Mobile Safari',
+    location: 'Mumbai, Maharashtra, India',
+    ip: '157.34.18.201',
+    current: false,
+    last_active: '5 days ago (22 Oct 2026, 09:14)',
+    icon: 'Smartphone',
+  },
+];
+
 export const navigation = [
   { label: 'Search', path: '/search', icon: 'Search' },
   { label: 'Dashboard', path: '/home', icon: 'LayoutDashboard' },
@@ -24,6 +98,7 @@ export const pageDescriptions: Record<string, string> = {
   'Plans & Limits': 'Manage platform plans and capacity limits',
   Notifications: 'Your platform updates, all in one place',
   'Audit Logs': 'A history of changes across your platform',
+  'Profile Settings': 'Manage your personal details, credentials, security, and workspace preferences',
   Search: 'Find your way around LFD Cloud',
 };
 export interface Organization {
@@ -113,12 +188,381 @@ export const subscriptions = subscriptionRows.map((row, i) => {
     usage: { users: { used: row.users, limit: plan.max_users }, projects: { used: org.project_count, limit: plan.max_projects } } };
 });
 export const subscriptionSummary = { active: 4, expiring: 4, expired: 5, mrr: 0 };
+
+export type NotificationCategory = 'subscriptions' | 'value_streams' | 'risk' | 'organizations' | 'system';
+export type NotificationPriority = 'urgent' | 'warning' | 'info';
+export interface NotificationItem {
+  id: string;
+  title: string;
+  message: string;
+  organization?: string;
+  category: NotificationCategory;
+  priority: NotificationPriority;
+  status: 'unread' | 'read' | 'archived';
+  time: string;
+  actionLabel: string;
+  to: string;
+  icon: string;
+}
+
+export const initialNotifications: NotificationItem[] = [
+  {
+    id: 'notif-shivam-expiring',
+    title: 'Trial subscription expiring in 4 days',
+    message: 'Trial plan ends on 31 Oct 2026. 2 active users and 2 value streams will require renewal to preserve write access.',
+    organization: 'SHIVAMSHREE BUSINESSES LTD.',
+    category: 'subscriptions',
+    priority: 'urgent',
+    status: 'unread',
+    time: '2 hours ago',
+    actionLabel: 'Review subscription',
+    to: '/hub/subscriptions',
+    icon: 'CreditCard',
+  },
+  {
+    id: 'notif-sahyadri-risk',
+    title: 'Critical risk items flagged in Plant relocation',
+    message: 'Plant relocation · Phase 01 contains high/critical RPN risks awaiting mitigation owners and target completion dates.',
+    organization: 'Sahyadri Auto Components Pvt. Ltd.',
+    category: 'risk',
+    priority: 'urgent',
+    status: 'unread',
+    time: '5 hours ago',
+    actionLabel: 'Open risk priority',
+    to: '/risk/priority',
+    icon: 'ShieldAlert',
+  },
+  {
+    id: 'notif-quota-overlimit',
+    title: 'Value stream quota exceeded across 3 client tenants',
+    message: 'Ashgrove Hardware Works (10/2), Nordvik Precision Components (10/2), and Kalinga Metal Treatment (9/2) exceed Trial plan limits.',
+    organization: 'Ashgrove Hardware Works',
+    category: 'subscriptions',
+    priority: 'warning',
+    status: 'unread',
+    time: 'Yesterday',
+    actionLabel: 'Inspect limits',
+    to: '/hub/subscriptions',
+    icon: 'SlidersHorizontal',
+  },
+  {
+    id: 'notif-vsm-fibc',
+    title: 'Current state VSM map updated to 65%',
+    message: 'White FIBC 90X90X120 CM (New) updated with revised takt inputs, shift break columns, and outbound stock days.',
+    organization: 'SHIVAMSHREE BUSINESSES LTD.',
+    category: 'value_streams',
+    priority: 'info',
+    status: 'unread',
+    time: '2 days ago',
+    actionLabel: 'Open VSM map',
+    to: '/vsm/current',
+    icon: 'Workflow',
+  },
+  {
+    id: 'notif-expired-subs',
+    title: '5 client Trial subscriptions have ended',
+    message: 'BRW, Ashgrove Hardware Works, Kalinga Metal Treatment, Nordvik Precision Components, and Test PPQ need plan renewal.',
+    category: 'subscriptions',
+    priority: 'warning',
+    status: 'read',
+    time: '4 days ago',
+    actionLabel: 'Manage renewals',
+    to: '/hub/subscriptions',
+    icon: 'History',
+  },
+  {
+    id: 'notif-new-orgs',
+    title: '3 new internal organizations onboarded',
+    message: 'Narmada Pharma Formulations Pvt. Ltd., Sahyadri Auto Components Pvt. Ltd., and Kalinga Metal Treatment Pvt. Ltd. created by Faber Infinite.',
+    organization: 'Faber Infinite',
+    category: 'organizations',
+    priority: 'info',
+    status: 'read',
+    time: '11 days ago',
+    actionLabel: 'View organizations',
+    to: '/hub/organizations',
+    icon: 'Building2',
+  },
+  {
+    id: 'notif-vsi-kalinga',
+    title: 'VSI product family handoff ready for VSM',
+    message: 'Wire Drawing and Galvanizing (40% complete) has Pareto-ranked product families ready for value stream setup.',
+    organization: 'Kalinga Metal Treatment',
+    category: 'value_streams',
+    priority: 'info',
+    status: 'read',
+    time: '14 days ago',
+    actionLabel: 'Open VSI intake',
+    to: '/vsi/grouping',
+    icon: 'Compass',
+  },
+  {
+    id: 'notif-system-health',
+    title: 'All 19 LFD Cloud services operational',
+    message: 'Platform health check passed: Database Healthy, Storage usage at 10%, API status Operational across all regions.',
+    category: 'system',
+    priority: 'info',
+    status: 'read',
+    time: '18 days ago',
+    actionLabel: 'Explore services',
+    to: '/services',
+    icon: 'ShieldCheck',
+  },
+];
 export const userSummary = {
   total: 6, internal: 3, client: 3, active: 6, inactive: 0, pending: 0,
   roles: [{ label: 'Super admins', count: 1, color: 'orange' }, { label: 'Admins', count: 2, color: 'blue' }, { label: 'Users', count: 3, color: 'green' }],
 };
 // Profile sample uses the application's real user field names.
 export const users = [{ user_id: 'user-rohit', full_name: profile.full_name, email: '', global_role: 'super_admin', user_type: 'internal', status: 'active', position: 'Super Admin', orgs: [] }];
+
+export type AuditAction = 'created' | 'updated' | 'exported' | 'auth' | 'suspended';
+export type AuditResourceType =
+  | 'Value stream'
+  | 'Organization'
+  | 'Subscription'
+  | 'User & Role'
+  | 'Security & Auth'
+  | 'Study & Export';
+
+export interface AuditFieldDiff {
+  field: string;
+  before: string;
+  after: string;
+}
+
+export interface AuditLogEntry {
+  id: string;
+  timestamp: string;
+  relativeTime: string;
+  actor: {
+    name: string;
+    email: string;
+    role: string;
+    initials: string;
+  };
+  action: AuditAction;
+  resource_type: AuditResourceType;
+  target: string;
+  organization: string;
+  summary: string;
+  ip_address: string;
+  source: 'Web App' | 'Excel Export' | 'Auth Service' | 'System Job';
+  status: 'verified' | 'flagged';
+  changes?: AuditFieldDiff[];
+}
+
+export const auditLogs: AuditLogEntry[] = [
+  {
+    id: 'AUD-2026-1048',
+    timestamp: '2026-10-29 14:22:08 IST',
+    relativeTime: '2 hours ago',
+    actor: { name: 'Rohit Manvar', email: 'superadmin@vsmstudio.com', role: 'Super Admin', initials: 'RM' },
+    action: 'updated',
+    resource_type: 'Value stream',
+    target: 'Transmission gear — GR-24 (VSM Setup)',
+    organization: 'Sahyadri Auto Components Pvt. Ltd.',
+    summary: 'Updated customer daily demand and shift break columns in Step 04 Value Stream Mapping setup.',
+    ip_address: '103.21.144.62',
+    source: 'Web App',
+    status: 'verified',
+    changes: [
+      { field: 'demandPerDay', before: '1,800 Pieces', after: '1,920 Pieces' },
+      { field: 'shifts[0].breaks.tea', before: '15 min', after: '20 min' },
+      { field: 'available_time_sec', before: '52,800 s', after: '51,600 s' },
+    ],
+  },
+  {
+    id: 'AUD-2026-1047',
+    timestamp: '2026-10-29 11:04:51 IST',
+    relativeTime: '5 hours ago',
+    actor: { name: 'Rohit Manvar', email: 'superadmin@vsmstudio.com', role: 'Super Admin', initials: 'RM' },
+    action: 'auth',
+    resource_type: 'Security & Auth',
+    target: 'Desktop Workstation · Chrome 130.0',
+    organization: 'Platform Global',
+    summary: 'Super Admin session verified via TOTP Two-Factor Authentication.',
+    ip_address: '103.21.144.62',
+    source: 'Auth Service',
+    status: 'verified',
+    changes: [
+      { field: 'mfa_method', before: 'Pending', after: 'Authenticator App (TOTP)' },
+      { field: 'session_scope', before: 'None', after: 'super_admin (All 9 Orgs)' },
+    ],
+  },
+  {
+    id: 'AUD-2026-1046',
+    timestamp: '2026-10-28 18:40:19 IST',
+    relativeTime: 'Yesterday',
+    actor: { name: 'Priya Deshmukh', email: 'priya.d@sahyadriauto.in', role: 'Org Admin', initials: 'PD' },
+    action: 'updated',
+    resource_type: 'Value stream',
+    target: 'Plant relocation · Phase 01 (Risk R-004)',
+    organization: 'Sahyadri Auto Components Pvt. Ltd.',
+    summary: 'Scored Risk Assessment item S × O × D and assigned mitigation deadline.',
+    ip_address: '49.36.210.88',
+    source: 'Web App',
+    status: 'flagged',
+    changes: [
+      { field: 'rpn_score', before: 'Unscored', after: '80 (Critical)' },
+      { field: 'owner', before: 'Unassigned', after: 'Maintenance Lead · Chakan' },
+    ],
+  },
+  {
+    id: 'AUD-2026-1045',
+    timestamp: '2026-10-28 15:12:44 IST',
+    relativeTime: 'Yesterday',
+    actor: { name: 'Rohit Manvar', email: 'superadmin@vsmstudio.com', role: 'Super Admin', initials: 'RM' },
+    action: 'exported',
+    resource_type: 'Study & Export',
+    target: 'PPQ Analysis Workbook (.xlsx)',
+    organization: 'Ashgrove Hardware Works',
+    summary: 'Exported ranked SKU Pareto matrix and VSI handoff sheet across 42 product codes.',
+    ip_address: '103.21.144.62',
+    source: 'Excel Export',
+    status: 'verified',
+    changes: [
+      { field: 'exported_skus', before: '—', after: '42 SKUs (A: 8, B: 14, C: 20)' },
+      { field: 'format', before: '—', after: 'Excel (.xlsx)' },
+    ],
+  },
+  {
+    id: 'AUD-2026-1044',
+    timestamp: '2026-10-27 16:55:03 IST',
+    relativeTime: '2 days ago',
+    actor: { name: 'System Billing Monitor', email: 'system@lfdcloud.internal', role: 'System Job', initials: 'SB' },
+    action: 'suspended',
+    resource_type: 'Subscription',
+    target: 'Trial Plan Quota Flag',
+    organization: 'Ashgrove Hardware Works',
+    summary: 'Flagged organization value stream count exceeding Trial plan maximum threshold.',
+    ip_address: '10.0.4.18',
+    source: 'System Job',
+    status: 'flagged',
+    changes: [
+      { field: 'projects_used', before: '2 / 2', after: '10 / 2 (Over limit)' },
+      { field: 'effective_status', before: 'active', after: 'expired (2026-10-11)' },
+    ],
+  },
+  {
+    id: 'AUD-2026-1043',
+    timestamp: '2026-10-25 10:18:32 IST',
+    relativeTime: '4 days ago',
+    actor: { name: 'Rohit Manvar', email: 'superadmin@vsmstudio.com', role: 'Super Admin', initials: 'RM' },
+    action: 'auth',
+    resource_type: 'Security & Auth',
+    target: 'Personal Access Token (pat_lfd_live_9a...88e2)',
+    organization: 'Platform Global',
+    summary: 'Rotated developer API personal access token with CI/CD export read/write scope.',
+    ip_address: '115.240.89.14',
+    source: 'Auth Service',
+    status: 'verified',
+    changes: [
+      { field: 'token_expiry', before: '2026-10-31', after: '2026-12-31' },
+      { field: 'scopes', before: 'read:vsm', after: 'read:vsm, write:export' },
+    ],
+  },
+  {
+    id: 'AUD-2026-1042',
+    timestamp: '2026-10-18 17:09:11 IST',
+    relativeTime: '11 days ago',
+    actor: { name: 'Ankit Mehta', email: 'ankit.m@shivamshree.com', role: 'Org Admin', initials: 'AM' },
+    action: 'updated',
+    resource_type: 'Value stream',
+    target: 'White FIBC 90X90X120 CM (New)',
+    organization: 'SHIVAMSHREE BUSINESSES LTD.',
+    summary: 'Progressed FIBC extrusion and stitching value stream from 45% to 65% completion.',
+    ip_address: '157.34.18.201',
+    source: 'Web App',
+    status: 'verified',
+    changes: [
+      { field: 'progress', before: '45%', after: '65%' },
+      { field: 'completed_steps', before: 'Step 01–06', after: 'Step 01–10' },
+    ],
+  },
+  {
+    id: 'AUD-2026-1041',
+    timestamp: '2026-10-16 09:44:27 IST',
+    relativeTime: '13 days ago',
+    actor: { name: 'Rohit Manvar', email: 'superadmin@vsmstudio.com', role: 'Super Admin', initials: 'RM' },
+    action: 'updated',
+    resource_type: 'User & Role',
+    target: 'Internal Engineering Team Permissions',
+    organization: 'BRW',
+    summary: 'Granted internal admin role access for VSM and Flow Management modules.',
+    ip_address: '103.21.144.62',
+    source: 'Web App',
+    status: 'verified',
+    changes: [
+      { field: 'admin_count', before: '1', after: '2' },
+      { field: 'role', before: 'user', after: 'admin' },
+    ],
+  },
+  {
+    id: 'AUD-2026-1040',
+    timestamp: '2026-10-09 12:30:00 IST',
+    relativeTime: '18 days ago',
+    actor: { name: 'Faber Infinite', email: 'ops@faberinfinite.com', role: 'Super Admin', initials: 'FI' },
+    action: 'created',
+    resource_type: 'Organization',
+    target: 'Narmada Pharma Formulations Pvt. Ltd.',
+    organization: 'Narmada Pharma Formulations Pvt. Ltd.',
+    summary: 'Provisioned internal pharma tenant with Trial plan and 3 initial value stream studies.',
+    ip_address: '103.21.144.10',
+    source: 'Web App',
+    status: 'verified',
+    changes: [
+      { field: 'org_type', before: '—', after: 'internal' },
+      { field: 'location', before: '—', after: 'Sarigam GIDC, Valsad, Gujarat' },
+    ],
+  },
+  {
+    id: 'AUD-2026-1039',
+    timestamp: '2026-10-09 12:28:15 IST',
+    relativeTime: '18 days ago',
+    actor: { name: 'Faber Infinite', email: 'ops@faberinfinite.com', role: 'Super Admin', initials: 'FI' },
+    action: 'created',
+    resource_type: 'Organization',
+    target: 'Sahyadri Auto Components Pvt. Ltd.',
+    organization: 'Sahyadri Auto Components Pvt. Ltd.',
+    summary: 'Provisioned internal Tier-1 automotive tenant located at Chakan MIDC, Pune.',
+    ip_address: '103.21.144.10',
+    source: 'Web App',
+    status: 'verified',
+  },
+  {
+    id: 'AUD-2026-1038',
+    timestamp: '2026-10-04 14:15:40 IST',
+    relativeTime: '25 days ago',
+    actor: { name: 'Vikram Singh', email: 'v.singh@kalingametal.in', role: 'Org Admin', initials: 'VS' },
+    action: 'exported',
+    resource_type: 'Study & Export',
+    target: 'Visual Management Guidelines Audit Report',
+    organization: 'Kalinga Metal Treatment',
+    summary: 'Generated Visual Management V1–V10 placement audit snapshot for Jamshedpur plant.',
+    ip_address: '117.203.92.41',
+    source: 'Excel Export',
+    status: 'verified',
+  },
+  {
+    id: 'AUD-2026-1037',
+    timestamp: '2026-10-01 10:02:18 IST',
+    relativeTime: '28 days ago',
+    actor: { name: 'Rohit Manvar', email: 'superadmin@vsmstudio.com', role: 'Super Admin', initials: 'RM' },
+    action: 'created',
+    resource_type: 'Organization',
+    target: 'SHIVAMSHREE BUSINESSES LTD.',
+    organization: 'SHIVAMSHREE BUSINESSES LTD.',
+    summary: 'Onboarded client FIBC manufacturing tenant in Ahmedabad with Trial subscription.',
+    ip_address: '103.21.144.62',
+    source: 'Web App',
+    status: 'verified',
+    changes: [
+      { field: 'org_type', before: '—', after: 'client' },
+      { field: 'plan', before: '—', after: 'Trial (Expires 2026-10-31)' },
+    ],
+  },
+];
 
 
 export const riskAssessment = {
@@ -1203,19 +1647,23 @@ export const trainingDescriptions: Record<string, string> = {
   '/training/report': 'The session pack: attendance, mood, coverage — and the certificates.',
 };
 export const vsmNavigation = [
-  { label: 'Overview', path: '/vsm', icon: 'LayoutDashboard' },
-  { label: 'Demand & Takt', path: '/vsm/setup', icon: 'Clock', step: '01' },
-  { label: 'Process Data', path: '/vsm/processes', icon: 'Cog', step: '02' },
+  { label: 'Dashboard', path: '/vsm', icon: 'LayoutDashboard' },
+  { label: 'My Value Streams', path: '/vsm/streams', icon: 'Layers' },
+  { label: 'Project Setup', path: '/vsm/setup', icon: 'Clock', step: '01' },
+  { label: 'Process Builder', path: '/vsm/processes', icon: 'Cog', step: '02' },
   { label: 'Current State Map', path: '/vsm/current', icon: 'Workflow', step: '03' },
-  { label: 'Future State', path: '/vsm/future', icon: 'Sparkles', step: '04' },
-  { label: 'Analytics', path: '/vsm/analytics', icon: 'BarChart3', step: '05' },
+  { label: 'FSM Planner', path: '/vsm/planner', icon: 'Target', step: '04' },
+  { label: 'Future State Map', path: '/vsm/future', icon: 'Sparkles', step: '05' },
+  { label: 'Analytics', path: '/vsm/analytics', icon: 'BarChart3', step: '06' },
 ];
 export const vsmDescriptions: Record<string, string> = {
-  '/vsm': 'Map current and future state value streams, and measure what the change is worth.',
-  '/vsm/setup': 'Size the plant tempo to the customer: demand, shifts and breaks give the takt time.',
-  '/vsm/processes': 'One data box per work centre: cycle time, changeover, uptime, operators and the WIP after it.',
+  '/vsm': 'Identify waste, improve lead times and design your future state.',
+  '/vsm/streams': 'Manage, transfer and archive all value streams across organizations.',
+  '/vsm/setup': 'Define your facility parameters, supplier details, and customer demand to start the automation process. This data will calibrate the VSM engine.',
+  '/vsm/processes': 'Configure manufacturing sequence, inventory buffers, and process cycles to auto-calculate your Value Stream metrics.',
   '/vsm/current': 'The unvarnished reality: push arrows, WIP buffers and the lead-time ladder.',
-  '/vsm/future': 'Pull, flow and one scheduling point — and the kaizen bursts that make it true.',
+  '/vsm/planner': 'Place improvement points on the current state map and apply AI recommendations to plan the future state.',
+  '/vsm/future': 'The future state map: the current map with every planned improvement applied, and each improvement point tracked to done.',
   '/vsm/analytics': 'Current against future: lead time, cycle efficiency, inventory and station balance.',
 };
 export const flowNavigation = [

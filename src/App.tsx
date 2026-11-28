@@ -22,9 +22,13 @@ import Organizations from './pages/Organizations';
 import Services from './pages/Services';
 import Subscriptions from './pages/Subscriptions';
 import Users from './pages/Users';
+import ProfileSettings from './pages/ProfileSettings';
+import Notifications, { NotificationsProvider } from './pages/Notifications';
+import AuditLogs from './pages/AuditLogs';
+import Search from './pages/Search';
 import Placeholder from './pages/Placeholder';
 export default function App() {
-  return <PreviewProvider><TrainingProvider><VSMProvider><FlowProvider><RiskProvider><PPQProvider><VSIProvider><CapacityProvider><EquipmentProvider><ManpowerProvider><SupplyProvider><SupermarketProvider><MHProvider><LayoutProvider><VisualProvider><ProjectProvider><Routes><Route element={<Layout />}>
+  return <PreviewProvider><NotificationsProvider><TrainingProvider><VSMProvider><FlowProvider><RiskProvider><PPQProvider><VSIProvider><CapacityProvider><EquipmentProvider><ManpowerProvider><SupplyProvider><SupermarketProvider><MHProvider><LayoutProvider><VisualProvider><ProjectProvider><Routes><Route element={<Layout />}>
     <Route index element={<Navigate to="/home" replace />} />
     <Route path="/home" element={<Dashboard />} />
     <Route path="/hub/organizations" element={<Organizations />} />
@@ -35,9 +39,11 @@ export default function App() {
     <Route path="/training/attendance" element={<TrainingOrientation />} />
     <Route path="/training/report" element={<TrainingOrientation />} />
     <Route path="/vsm" element={<ValueStreamMapping />} />
+    <Route path="/vsm/streams" element={<ValueStreamMapping />} />
     <Route path="/vsm/setup" element={<ValueStreamMapping />} />
     <Route path="/vsm/processes" element={<ValueStreamMapping />} />
     <Route path="/vsm/current" element={<ValueStreamMapping />} />
+    <Route path="/vsm/planner" element={<ValueStreamMapping />} />
     <Route path="/vsm/future" element={<ValueStreamMapping />} />
     <Route path="/vsm/analytics" element={<ValueStreamMapping />} />
     <Route path="/flow-management" element={<FlowManagement />} />
@@ -106,12 +112,15 @@ export default function App() {
     <Route path="/rollout" element={<Navigate to="/project-plan" replace />} />
     <Route path="/rollout/*" element={<Navigate to="/project-plan" replace />} />
     <Route path="/services" element={<Services />} />
+    <Route path="/profile" element={<ProfileSettings />} />
+    <Route path="/settings" element={<Navigate to="/profile" replace />} />
+    <Route path="/account" element={<Navigate to="/profile" replace />} />
     <Route path="/plans" element={<Placeholder title="Plans & Limits" />} />
-    <Route path="/hub/notifications" element={<Placeholder title="Notifications" />} />
-    <Route path="/audit-logs" element={<Placeholder title="Audit Logs" />} />
-    <Route path="/search" element={<Placeholder title="Search" />} />
+    <Route path="/hub/notifications" element={<Notifications />} />
+    <Route path="/audit-logs" element={<AuditLogs />} />
+    <Route path="/search" element={<Search />} />
     <Route path="*" element={<Placeholder title="Page not found" />} />
-  </Route></Routes></ProjectProvider></VisualProvider></LayoutProvider></MHProvider></SupermarketProvider></SupplyProvider></ManpowerProvider></EquipmentProvider></CapacityProvider></VSIProvider></PPQProvider></RiskProvider></FlowProvider></VSMProvider></TrainingProvider></PreviewProvider>;
+  </Route></Routes></ProjectProvider></VisualProvider></LayoutProvider></MHProvider></SupermarketProvider></SupplyProvider></ManpowerProvider></EquipmentProvider></CapacityProvider></VSIProvider></PPQProvider></RiskProvider></FlowProvider></VSMProvider></TrainingProvider></NotificationsProvider></PreviewProvider>;
 }
 
 
